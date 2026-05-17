@@ -1,0 +1,6 @@
+{
+  "name": "cdpath-skills",
+  "skills": [
+    "./skills/homework-cli"
+  ]
+}
