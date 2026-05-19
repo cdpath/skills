@@ -5,7 +5,7 @@ description: Use this skill when the user wants to create a new category in thei
 
 # Obsidian Category Creator
 
-This skill helps create new categories in the Obsidian vault at `/Users/jingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/`.
+This skill helps create new categories in the Obsidian vault at `/Users/liujingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/`.
 
 ## What is a Category?
 
@@ -15,17 +15,16 @@ A category in this vault consists of two files:
 
 ## How to Create a New Category
 
-Run the Python script:
+这个 skill **不依赖脚本**，直接创建两个文件即可。
 
-```bash
-python ~/.claude/skills/obsidian-category/scripts/create_category.py "CategoryName"
-```
+Vault 路径：`/Users/liujingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/`
 
-Or with a custom vault path:
+在以下两个位置分别创建同名文件（用 `Memory` 举例）：
 
-```bash
-python ~/.claude/skills/obsidian-category/scripts/create_category.py "CategoryName" --vault /path/to/vault
-```
+1. `categories/Memory.md`
+2. `templates/bases/Memory.base`
+
+文件内容见下方模板。
 
 ## File Templates
 
@@ -52,17 +51,28 @@ views:
 
 ## Examples
 
-Create a "Machine Learning" category:
-```bash
-python ~/.claude/skills/obsidian-category/scripts/create_category.py "Machine Learning"
+创建 "Machine Learning" category：
+
+在 `categories/Machine Learning.md` 写入：
+```markdown
+---
+tags: categories
+---
+![[Machine Learning.base]]
 ```
 
-This creates:
-- `/Users/jingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/categories/Machine Learning.md`
-- `/Users/jingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/templates/bases/Machine Learning.base`
+在 `templates/bases/Machine Learning.base` 写入：
+```yaml
+filters:
+  and:
+    - category.contains(link("Machine Learning"))
+    - '!file.name.contains("Template")'
+views:
+  - type: table
+    name: Table
+```
 
 ## Notes
 
 - Category names can contain spaces
-- The script will fail if the category already exists (to prevent overwriting)
-- Default vault path: `/Users/jingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/`
+- 创建前检查同名文件是否已存在（避免覆盖）
