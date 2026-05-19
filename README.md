@@ -23,6 +23,7 @@ The CLI auto-detects your coding agent (Claude Code, Cursor, Amp, etc.) and inst
 ## Skills
 
 - **[homework-cli](./skills/homework-cli/SKILL.md)** — Fetches and analyzes student homework from the welife001 parent-side API using the `homework` CLI.
+- **[obsidian-category](./skills/obsidian-category/SKILL.md)** — Creates new categories in the Obsidian vault (ankiv3).
 
 ## Layout
 

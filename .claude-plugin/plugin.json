@@ -1,6 +1,7 @@
 {
   "name": "cdpath-skills",
   "skills": [
-    "./skills/homework-cli"
+    "./skills/homework-cli",
+    "./skills/obsidian-category"
   ]
 }
