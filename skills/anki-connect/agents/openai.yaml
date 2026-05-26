@@ -1,0 +1,4 @@
+interface:
+  display_name: "AnkiConnect"
+  short_description: "Use AnkiConnect with Anki safely"
+  default_prompt: "Use AnkiConnect to inspect or update Anki through the local HTTP API."

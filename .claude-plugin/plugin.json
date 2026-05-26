@@ -2,6 +2,7 @@
   "name": "cdpath-skills",
   "skills": [
     "./skills/homework-cli",
+    "./skills/anki-connect",
     "./skills/obsidian-category"
   ]
 }
