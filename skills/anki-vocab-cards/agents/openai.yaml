@@ -1,0 +1,4 @@
+interface:
+  display_name: "Working Vocabulary"
+  short_description: "Create Anki vocabulary and phrase cards"
+  default_prompt: "Use $anki-vocab-cards to create a Serendipity vocabulary or phrase card from this entry and example sentence."

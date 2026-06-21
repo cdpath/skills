@@ -3,6 +3,7 @@
   "skills": [
     "./skills/homework-cli",
     "./skills/anki-connect",
+    "./skills/anki-vocab-cards",
     "./skills/obsidian-category",
     "./skills/tufte-viz"
   ]
