@@ -149,6 +149,7 @@ def main() -> int:
     input_path = args.input_image.expanduser().resolve()
     if not input_path.exists():
         raise SystemExit(f"input image not found: {input_path}")
+    output_md = input_path.with_suffix(".md")
 
     out_dir = args.out_dir
     if out_dir is None:
@@ -168,6 +169,7 @@ def main() -> int:
     print(f"width={width} height={height} format={image_format}")
     print(f"out_dir={out_dir}")
     print(f"chunks={count}")
+    print(f"output_md={output_md}")
     return 0
 
 
