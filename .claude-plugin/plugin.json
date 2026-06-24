@@ -5,6 +5,7 @@
     "./skills/anki-connect",
     "./skills/anki-vocab-cards",
     "./skills/obsidian-category",
-    "./skills/tufte-viz"
+    "./skills/tufte-viz",
+    "./skills/long-screenshot-ocr"
   ]
 }

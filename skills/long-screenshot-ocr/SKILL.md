@@ -11,7 +11,9 @@ Extract a tall web/wiki screenshot into clean Markdown by splitting it into over
 ## Steps
 
 1. **Inspect the image.**
-   - Read dimensions `(width, height)` and format.
+   - Read dimensions `(width, height)` and format with an available local image tool.
+   - Prefer already-available tools: importable Python `PIL` first, then `ffmpeg`/`ffprobe`.
+   - Do not run `pip install`, create a venv, or install persistent dependencies. If neither Pillow nor ffmpeg is available and slicing is still needed, use `uvx --with pillow python ...` for that one command only.
    - Completion criterion: you know exact width, height, and that the image is a vertical long screenshot.
 
 2. **Create a temp directory.**
@@ -19,13 +21,18 @@ Extract a tall web/wiki screenshot into clean Markdown by splitting it into over
    - Completion criterion: a unique `/tmp/feishu_ocr.<random>/` directory exists and its path is recorded.
 
 3. **Split into overlapping chunks.**
+   - Use [`scripts/split_long_screenshot.py`](scripts/split_long_screenshot.py) when available:
+     `python3 <skill-dir>/scripts/split_long_screenshot.py <input-image> --out-dir <temp-dir>`.
+   - The script uses importable Pillow if present, otherwise existing `ffmpeg`/`ffprobe`.
+   - If the script reports that neither tool is available, run it once through `uvx --with pillow python <skill-dir>/scripts/split_long_screenshot.py ...`.
    - Slice vertically with `chunk_height = 2500 px` and `overlap = 500 px`.
    - Save as `chunk_{idx:03d}_{top}_{bottom}.png` so every filename encodes its pixel range.
    - Completion criterion: the full height is covered, the last chunk ends exactly at `height`, and every adjacent pair shares 500 px.
 
 4. **Read every chunk.**
-   - Use vision to transcribe each chunk, preserving headings, tables, lists, and fenced code blocks.
-   - If the user explicitly requests full automation, fall back to Tesseract with `chi_sim+eng`, `--psm 6`, and pre-processing (grayscale + 1.5× contrast).
+   - Use the current model's vision capability to transcribe each chunk, preserving headings, tables, lists, and fenced code blocks.
+   - Do not install or run third-party OCR tools in the normal path. If the model can see images, reading the chunk images is the OCR step.
+   - Use Tesseract or another OCR engine only when the user explicitly asks for full automation/no-vision OCR, or when model vision is unavailable. If needed, use an already-installed OCR engine first; install nothing without user approval.
    - Completion criterion: every chunk has a corresponding raw text excerpt.
 
 5. **Stitch and deduplicate.**
@@ -39,7 +46,9 @@ Extract a tall web/wiki screenshot into clean Markdown by splitting it into over
 
 7. **Format and save.**
    - Convert into Markdown with `#`/`##` headings, `|` tables, ` ``` ` code blocks, and `-`/`1.` lists.
-   - Save as `ocr_vision_stitched.md` or a name matching the task.
+   - Save the final Markdown next to the input image by replacing the input screenshot extension with `.md`.
+   - Example: `screencapture-foo-2026-06-24.png` -> `screencapture-foo-2026-06-24.md`.
+   - Do not rename the final file from the visible document title. A temp file may use an internal name such as `stitched.md`, but the delivered file should be derived from the input filename unless the user provided an explicit output path.
    - Completion criterion: the output file exists and renders correctly as Markdown.
 
 ## Reference
@@ -50,9 +59,8 @@ Extract a tall web/wiki screenshot into clean Markdown by splitting it into over
 | --- | --- | --- |
 | `chunk_height` | 2500 px | Keeps each vision call manageable while preserving context. |
 | `overlap` | 500 px | Gives a deduplication anchor between adjacent chunks. |
-| Tesseract PSM | 6 | Assumes a single uniform block of text. |
-| Tesseract languages | `chi_sim+eng` | Handles Chinese/English mixed content. |
-| Contrast boost | 1.5× | Improves Tesseract accuracy on low-contrast screenshots. |
+| OCR primary path | Vision | Handles mixed layout, tables, and code better than local OCR. |
+| OCR fallback | Existing Tesseract only | Use only for explicit no-vision/full-automation requests. |
 
 ### Split formula
 
@@ -69,9 +77,10 @@ while top < height:
 
 ### Tools
 
-- Python + Pillow for slicing and pre-processing.
-- Tesseract + tesseract-lang (chi_sim/eng) for the fallback path only.
+- Existing Python + Pillow or existing `ffmpeg`/`ffprobe` for slicing.
+- `uvx --with pillow` for one-shot slicing only when no local image tool is available.
 - Vision capability for the primary transcription path.
+- Tesseract + language packs for fallback only when explicitly requested or vision is unavailable.
 
 ### Failure modes
 
@@ -79,3 +88,5 @@ while top < height:
 - **Missing boundary text** — chunk height too large or overlap too small; verify chunks cover the full height and share overlap.
 - **UI noise in output** — the strip-noise step was skipped; re-run step 6 against the full stitched text.
 - **Garbled tables/code** — vision was bypassed for Tesseract on complex layouts; prefer vision for tables and code blocks.
+- **Slow dependency setup** — local tools were not checked first; use existing Pillow or `ffmpeg`/`ffprobe`, and only then a one-shot `uvx --with pillow` command.
+- **Wrong output filename** — the document title was used; rename final output from the input screenshot basename with `.md`.

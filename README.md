@@ -27,6 +27,7 @@ The CLI auto-detects your coding agent (Claude Code, Cursor, Amp, etc.) and inst
 - **[anki-vocab-cards](./skills/anki-vocab-cards/SKILL.md)** — Creates source-backed Anki vocabulary and phrase cards for working vocabulary.
 - **[obsidian-category](./skills/obsidian-category/SKILL.md)** — Creates new categories in the Obsidian vault (ankiv3).
 - **[tufte-viz](./skills/tufte-viz/SKILL.md)** — Ideate and critique data visualizations using Edward Tufte's principles. (via [gist](https://gist.github.com/aparente/e48c353755958621b3c0004593105a90))
+- **[long-screenshot-ocr](./skills/long-screenshot-ocr/SKILL.md)** — Extracts long screenshots into clean Markdown using local slicing tools and model vision.
 
 ## Layout
 
