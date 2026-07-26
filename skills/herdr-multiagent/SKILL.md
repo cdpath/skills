@@ -37,6 +37,14 @@ Match isolation to whether workers write the same files:
 
 Done when every worker has one topology. Default writing workers to worktree-per-agent so concurrent edits never collide.
 
+**Pane layout (sibling panes).** Default to a **vertical split** - each worker opens as a column to the right of the driver, left to right:
+
+```
+[ driver | work1 | work2 | work3 ]
+```
+
+via `pane split --direction right`. The user can override the layout - ask or accept: stacked rows (`--direction down`), one worker per tab (`tab create`), or a separate workspace / new window (`workspace create`). Tune sizing with `pane split --ratio <0..1>`, `pane resize`, or `pane zoom`.
+
 **4. Provision, start, and prompt each worker.**
 
 ```bash

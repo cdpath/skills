@@ -119,7 +119,7 @@ for w in "${workers[@]}"; do IFS='|' read -r name _ task <<<"$w"; herdr agent pr
 for w in "${workers[@]}"; do IFS='|' read -r name _ _ <<<"$w"; herdr agent wait "$name" --timeout 300000 >/dev/null; done
 ```
 
-Alternate `right`/`down` or split within fresh tabs (`herdr tab create`) to keep panes usable; repeated same-direction splits go unusably narrow.
+Default layout is a **vertical split** - workers as columns to the right of the driver, left to right: `[ driver | work1 | work2 | ... ]` (`--direction right`). If the user asks, or panes get narrow with many workers, switch to: stacked rows (`--direction down`), one worker per fresh tab (`herdr tab create`), or a separate workspace / new window. Tune sizing with `pane split --ratio <0..1>`, `pane resize`, or `pane zoom`.
 
 ## One-shot agents
 
