@@ -1,11 +1,11 @@
 ---
 name: obsidian-category
-description: Use this skill when the user wants to create a new category in their Obsidian vault (ankiv3)
+description: Use this skill when the user wants to create a new category in their Obsidian vault
 ---
 
 # Obsidian Category Creator
 
-This skill helps create new categories in the Obsidian vault at `/Users/liujingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/`.
+This skill helps create new categories in the user's Obsidian vault. Resolve the vault root first (ask the user, or read `$OBSIDIAN_VAULT`); below it is written as `$VAULT_ROOT`.
 
 ## What is a Category?
 
@@ -17,7 +17,7 @@ A category in this vault consists of two files:
 
 这个 skill **不依赖脚本**，直接创建两个文件即可。
 
-Vault 路径：`/Users/liujingyi/Library/Mobile Documents/iCloud~md~obsidian/Documents/ankiv3/`
+Vault 根目录：`$VAULT_ROOT`（运行前先与用户确认，或从环境变量 `$OBSIDIAN_VAULT` 读取）
 
 在以下两个位置分别创建同名文件（用 `Memory` 举例）：
 

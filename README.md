@@ -25,9 +25,10 @@ The CLI auto-detects your coding agent (Claude Code, Cursor, Amp, etc.) and inst
 - **[homework-cli](./skills/homework-cli/SKILL.md)** — Fetches and analyzes student homework from the welife001 parent-side API using the `homework` CLI.
 - **[anki-connect](./skills/anki-connect/SKILL.md)** — Uses AnkiConnect to inspect and automate Anki through the local HTTP API, with warnings for mutating and destructive actions.
 - **[anki-vocab-cards](./skills/anki-vocab-cards/SKILL.md)** — Creates source-backed Anki vocabulary and phrase cards for working vocabulary.
-- **[obsidian-category](./skills/obsidian-category/SKILL.md)** — Creates new categories in the Obsidian vault (ankiv3).
+- **[obsidian-category](./skills/obsidian-category/SKILL.md)** — Creates new categories in an Obsidian vault.
 - **[tufte-viz](./skills/tufte-viz/SKILL.md)** — Ideate and critique data visualizations using Edward Tufte's principles. (via [gist](https://gist.github.com/aparente/e48c353755958621b3c0004593105a90))
 - **[long-screenshot-ocr](./skills/long-screenshot-ocr/SKILL.md)** — Extracts long screenshots into clean Markdown using local slicing tools and model vision.
+- **[pypi-publish](./skills/pypi-publish/SKILL.md)** — Publish a Python package to PyPI via GitHub Actions and Trusted Publishing (OIDC).
 
 ## Layout
 
