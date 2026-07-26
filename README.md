@@ -29,6 +29,7 @@ The CLI auto-detects your coding agent (Claude Code, Cursor, Amp, etc.) and inst
 - **[tufte-viz](./skills/tufte-viz/SKILL.md)** — Ideate and critique data visualizations using Edward Tufte's principles. (via [gist](https://gist.github.com/aparente/e48c353755958621b3c0004593105a90))
 - **[long-screenshot-ocr](./skills/long-screenshot-ocr/SKILL.md)** — Extracts long screenshots into clean Markdown using local slicing tools and model vision.
 - **[pypi-publish](./skills/pypi-publish/SKILL.md)** — Publish a Python package to PyPI via GitHub Actions and Trusted Publishing (OIDC).
+- **[herdr-multiagent](./skills/herdr-multiagent/SKILL.md)** - Drives a fleet of coding agents through Herdr: parallel implementation in separate worktrees, or review-then-implement chains. Requires the `herdr` CLI.
 
 ## Layout
 
