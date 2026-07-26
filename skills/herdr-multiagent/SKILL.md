@@ -37,13 +37,7 @@ Match isolation to whether workers write the same files:
 
 Done when every worker has one topology. Default writing workers to worktree-per-agent so concurrent edits never collide.
 
-**Pane layout (sibling panes).** Default to a **vertical split** - each worker opens as a column to the right of the driver, left to right:
-
-```
-[ driver | work1 | work2 | work3 ]
-```
-
-via `pane split --direction right`. The user can override the layout - ask or accept: stacked rows (`--direction down`), one worker per tab (`tab create`), or a separate workspace / new window (`workspace create`). Tune sizing with `pane split --ratio <0..1>`, `pane resize`, or `pane zoom`.
+**Pane layout (sibling panes).** Default fleet layout: the **driver on the left (full height)**, workers **stacked in a column on the right** - `main | work1 / work2 / work3`. Build it with one vertical split (`--direction right`) off the driver for the worker group, then horizontal splits (`--direction down`) to stack the workers. This keeps the driver readable; naively repeating `--direction right` instead shrinks the driver and gives reversed, narrow columns. The user can override - all side-by-side columns, all stacked, one worker per tab (`tab create`), or a separate workspace / new window. Full recipe + `--ratio` sizing in `references/patterns.md`.
 
 **4. Provision, start, and prompt each worker.**
 

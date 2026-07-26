@@ -119,7 +119,17 @@ for w in "${workers[@]}"; do IFS='|' read -r name _ task <<<"$w"; herdr agent pr
 for w in "${workers[@]}"; do IFS='|' read -r name _ _ <<<"$w"; herdr agent wait "$name" --timeout 300000 >/dev/null; done
 ```
 
-Default layout is a **vertical split** - workers as columns to the right of the driver, left to right: `[ driver | work1 | work2 | ... ]` (`--direction right`). If the user asks, or panes get narrow with many workers, switch to: stacked rows (`--direction down`), one worker per fresh tab (`herdr tab create`), or a separate workspace / new window. Tune sizing with `pane split --ratio <0..1>`, `pane resize`, or `pane zoom`.
+Default fleet layout: the **driver on the left (full height)**, workers **stacked in a column on the right** - `main | work1 / work2 / work3`. One vertical split for the group, then horizontal splits to stack workers:
+
+```bash
+A=$(herdr pane split --current --direction right --no-focus | jq -r '.result.pane.pane_id')              # main | A
+B=$(herdr pane split --pane "$A" --direction down --ratio 0.33 --no-focus | jq -r '.result.pane.pane_id')  # A keeps 1/3, rest -> B
+C=$(herdr pane split --pane "$B" --direction down --ratio 0.5  --no-focus | jq -r '.result.pane.pane_id')  # B,C each 1/3 -> equal thirds
+```
+
+`--ratio` is the **existing** pane's retained fraction (not the new pane's). For N workers stacked equally, the k-th down-split keeps `1/(N-k+1)` of the current block - for 3 workers that's 1/3 then 1/2; each split carves the next worker off the remaining block. Prefer this to repeating `--direction right`, which shrinks the driver and yields reversed, narrow columns.
+
+The user can override the layout - say so and accept: all side-by-side columns (`--direction right`), all stacked rows, one worker per fresh tab (`herdr tab create`), or a separate workspace / new window. Tune sizing with `pane split --ratio <0..1>`, `pane resize`, or `pane zoom`.
 
 ## One-shot agents
 
