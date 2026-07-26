@@ -57,7 +57,7 @@ for name in "${!PANE[@]}"; do herdr agent wait "$name" --timeout 300000; done
 
 Done when every worker has settled to `idle`, `done`, or `blocked`. `agent wait` returns at once for workers already settled, so wall time tracks the slowest worker. Route any `blocked` worker per `references/patterns.md`.
 
-**One-shot agents.** The steps above assume a persistent agent you start, prompt, and wait on. Some agents run one task per invocation and exit (`oz agent run`, `codex exec`, `claude -p`, `gemini -p`): skip `agent start` / `agent prompt` / `agent wait`, dispatch each as a pane command, and wait for a completion sentinel. They do not appear in `agent list` or get state tracking. See `references/patterns.md`.
+**One-shot agents.** The steps above assume a persistent agent you start, prompt, and wait on. Some agents run one task per invocation and exit (`oz agent run`, `codex exec`, `claude -p`, `gemini -p`): skip `agent start` / `agent prompt` / `agent wait`, dispatch each as a pane command that writes its result and an `.exit` sentinel to files, then poll for the `.exit` file and read the result. They do not appear in `agent list` or get state tracking. See `references/patterns.md`.
 
 **6. Collect results from files.**
 
@@ -86,9 +86,9 @@ Done when every worktree is removed and the workspace list again matches `before
   herdr plugin action invoke herdr.oz.run --plugin herdr.oz        # herdr.oz.run-cloud for cloud runs
   ```
 
-  Select the task text in a pane first - the selection is the prompt. Or bind `herdr.oz.run` to a key in `config.toml`.
+  Select the task text in a pane first - the selection is the prompt. Or bind `herdr.oz.run` to a key in `config.toml`. Knobs: `OZ_OUTPUT_FORMAT=text` for a cleaner pane, or `OZ_CAPTURE_DIR=/tmp/oz` to redirect `--output-format json` to a file (plus an `.exit` sentinel) for a driver to read.
 
-- **As a fleet worker.** Oz is one-shot, so follow the one-shot branch: skip `agent start` / `agent prompt` / `agent wait`, dispatch it as a pane command, and wait on a sentinel. Recipe in `references/patterns.md` -> "One-shot agents".
+- **As a fleet worker.** Oz is one-shot, so skip `agent start` / `agent prompt` / `agent wait`. Dispatch it as a pane command that writes `--output-format json` to a file plus an `.exit` sentinel, then poll for the `.exit` file and `jq`-parse the result. Recipe in `references/patterns.md` -> "One-shot agents".
 
 ## Reference
 

@@ -123,18 +123,33 @@ Alternate `right`/`down` or split within fresh tabs (`herdr tab create`) to keep
 
 ## One-shot agents
 
-Some agents run one task per invocation and exit - `oz agent run`, `codex exec`, `claude -p`, `gemini -p`. They are not persistent TUIs, so `agent start` / `agent prompt` / `agent wait` do not apply, and they do not appear in `agent list` or get lifecycle state. Dispatch each as a pane command and wait for a sentinel you print on completion:
+Some agents run one task per invocation and exit - `oz agent run`, `codex exec`, `claude -p`, `gemini -p`. They are not persistent TUIs, so `agent start` / `agent prompt` / `agent wait` do not apply, and they do not appear in `agent list` or get lifecycle state. Dispatch each as a pane command and wait on a **completion file**, not on pane text.
 
 ```bash
-# per one-shot worker (a worktree pane from the fan-out, or a sibling pane)
-herdr pane run "$pane" "oz agent run --prompt '$esc'; echo __DONE__\$?"
-herdr pane wait-output "$pane" --match "__DONE__" --timeout 300000
+# per one-shot worker: write output to a file, write the exit code to a sibling .exit
+herdr pane run "$pane" "$cmd > '$out' 2>&1; printf '%s\n' \$? > '$exitfile'"
+# driver polls the filesystem for the .exit file (no pane-text matching)
+while [ ! -f "$exitfile" ]; do sleep 0.5; done
+exit_code=$(cat "$exitfile"); cat "$out"
 ```
 
-- The sentinel (`__DONE__<exit>`) prints when the agent exits; `pane wait-output` matches it in the recent snapshot. Read the exit code from the matched line.
-- Collect results from files as usual - tell the worker to write its result to a path before exiting.
+Avoid a printed sentinel like `...; echo __DONE__$?` + `pane wait-output --match __DONE__`: the pane echoes the command line, which contains the sentinel literal, so the match fires on the **echo**, not the output - a silent false positive. A completion file sidesteps it entirely.
+
+### Oz specifically
+
+Oz emits a parseable NDJSON event stream with `--output-format json`; the agent's answer is on events with `"type":"agent"`:
+
+```bash
+ndjson="$OUT/$name.ndjson"; exitfile="$OUT/$name.exit"
+herdr pane run "$pane" "oz agent run --output-format json --name '$name' --prompt '$esc' > '$ndjson' 2>&1; printf '%s\n' \$? > '$exitfile'"
+while [ ! -f "$exitfile" ]; do sleep 0.5; done
+jq -rs 'map(select(.type=="agent")) | last | .text // empty' "$ndjson"                       # the answer
+jq -rs 'map(select(.event_type=="run_started")) | first | .run_id // empty' "$ndjson"        # run id
+```
+
 - Isolation is unchanged: still use worktree-per-agent if one-shot workers write the same repo concurrently.
-- `oz` is one-shot and not a herdr `--kind`, so drive it only through panes. A `herdr.oz` launcher plugin can dispatch it from the focused pane's selected text.
+- `oz` is one-shot and not a herdr `--kind`, so drive it only through panes. The [`herdr.oz`](https://github.com/cdpath/herdr-oz) plugin wraps the selected-text case; set `OZ_CAPTURE_DIR` on `herdr.oz.run` to get the same json→file + `.exit` capture automatically.
+- Oz renders to the visible screen, so `pane read --source recent-unwrapped` may be empty for an oz pane - use `--source visible`, or just read the capture file.
 
 ## Dependency sequencing and fan-in
 
@@ -176,7 +191,7 @@ Reserve `agent read` for status checks and short confirmations.
 
 - **`agent_prompt_stalled`** (`--wait` only): the worker did not leave its start state within 5 s - it exited or sits at a login/update/trust screen. `herdr pane read <pane> --source recent-unwrapped --lines 60`, fix it (re-login, restart, accept trust), then re-prompt.
 - **`agent_not_found`** for a name you started: the worker exited (crash, self-update, replaced). Re-check `herdr agent list`; if the pane is back at a shell prompt, `herdr agent start` the same name there again.
-- **Alternate-screen reads** (Claude Code, OpenCode): `agent read --lines N` returns no more of a long response as N grows. Ask the worker to write its full response to a file and read the file.
+- **Alternate-screen reads** (Claude Code, OpenCode, Oz): `agent read` / `pane read --source recent-unwrapped` returns little or nothing; Oz renders to the visible screen. Use `--source visible`, or have the worker write its output to a file and read the file.
 - **`timeout`**: check `agent get`; if `working`, extend `--timeout` and wait again; if `blocked`/`unknown`, read and intervene.
 - Wedged worker: `herdr agent send-keys <name> ctrl+c` to cancel the turn, then re-prompt or restart.
 
