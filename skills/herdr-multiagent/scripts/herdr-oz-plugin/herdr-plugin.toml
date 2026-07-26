@@ -1,0 +1,18 @@
+id = "herdr.oz"
+name = "Oz"
+version = "0.1.0"
+min_herdr_version = "0.7.0"
+description = "Run Warp Oz (oz) agent tasks in Herdr panes. Dispatches `oz agent run` (or `oz agent run-cloud`) in a sibling pane using the focused pane's selected text as the prompt."
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "run"
+title = "Run Oz task"
+contexts = ["workspace"]
+command = ["sh", "run.sh", "run"]
+
+[[actions]]
+id = "run-cloud"
+title = "Run Oz task (cloud)"
+contexts = ["workspace"]
+command = ["sh", "run.sh", "cloud"]
