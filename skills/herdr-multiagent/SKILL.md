@@ -79,17 +79,17 @@ Done when every worktree is removed and the workspace list again matches `before
 
 `oz agent run` is one-shot - one task per invocation, then it exits. Herdr does not recognize Oz as a native agent kind, so it never appears in `agent list` and gets no lifecycle state. Drive it two ways:
 
-- **Interactive, on selected text.** This skill ships a Herdr plugin at `scripts/herdr-oz-plugin/` that splits a sibling pane and runs Oz on the focused pane's selection. Link it once, then invoke the action (or bind `herdr.oz.run` to a key in `config.toml`):
+- **Interactive, on selected text.** Install the `herdr.oz` plugin (from [cdpath/herdr-oz](https://github.com/cdpath/herdr-oz)) - it splits a sibling pane and runs Oz on the focused pane's selection:
 
   ```bash
-  herdr plugin link ~/.claude/skills/herdr-multiagent/scripts/herdr-oz-plugin
+  herdr plugin install cdpath/herdr-oz
   herdr plugin action invoke herdr.oz.run --plugin herdr.oz        # herdr.oz.run-cloud for cloud runs
   ```
 
-  Select the task text in a pane first - the selection is the prompt. `run.sh` prints the pane id it dispatched into.
+  Select the task text in a pane first - the selection is the prompt. Or bind `herdr.oz.run` to a key in `config.toml`.
 
 - **As a fleet worker.** Oz is one-shot, so follow the one-shot branch: skip `agent start` / `agent prompt` / `agent wait`, dispatch it as a pane command, and wait on a sentinel. Recipe in `references/patterns.md` -> "One-shot agents".
 
 ## Reference
 
-`references/patterns.md` holds the full runnable fan-out loop, verified JSON result shapes, the sibling-pane variant, one-shot agents (`oz agent run`, `codex exec`), dependency sequencing and fan-in, `blocked`-approval handling, error recovery (`agent_prompt_stalled`, `agent_not_found`, alternate-screen reads), and per-agent-kind launch args. `scripts/herdr-oz-plugin/` is the bundled Herdr plugin for launching Oz on selected text (see Using Oz above). Read these for anything beyond the spine above.
+`references/patterns.md` holds the full runnable fan-out loop, verified JSON result shapes, the sibling-pane variant, one-shot agents (`oz agent run`, `codex exec`), dependency sequencing and fan-in, `blocked`-approval handling, error recovery (`agent_prompt_stalled`, `agent_not_found`, alternate-screen reads), and per-agent-kind launch args. Read it for anything beyond the spine above.
