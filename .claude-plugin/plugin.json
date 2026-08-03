@@ -8,6 +8,7 @@
     "./skills/tufte-viz",
     "./skills/long-screenshot-ocr",
     "./skills/pypi-publish",
-    "./skills/herdr-multiagent"
+    "./skills/herdr-multiagent",
+    "./skills/no-ai-slop"
   ]
 }
