@@ -1,3 +1,6 @@
 # npx skills installer output
 .agents/
 skills-lock.json
+
+# macOS
+.DS_Store
