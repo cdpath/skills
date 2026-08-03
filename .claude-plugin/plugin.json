@@ -9,6 +9,7 @@
     "./skills/long-screenshot-ocr",
     "./skills/pypi-publish",
     "./skills/herdr-multiagent",
-    "./skills/no-ai-slop"
+    "./skills/no-ai-slop",
+    "./skills/spark"
   ]
 }

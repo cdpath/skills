@@ -31,6 +31,7 @@ The CLI auto-detects your coding agent (Claude Code, Cursor, Amp, etc.) and inst
 - **[pypi-publish](./skills/pypi-publish/SKILL.md)** — Publish a Python package to PyPI via GitHub Actions and Trusted Publishing (OIDC).
 - **[herdr-multiagent](./skills/herdr-multiagent/SKILL.md)** — Drives a fleet of coding agents through Herdr: parallel implementation in separate worktrees, or review-then-implement chains. Requires the `herdr` CLI.
 - **[no-ai-slop](./skills/no-ai-slop/SKILL.md)** — Edits drafts into sharper, more human writing while preserving the writer's personal voice, or detects AI-slop patterns without rewriting.
+- **[spark](./skills/spark/SKILL.md)** — Collaborative brainstorming that walks a raw idea to a committed spec, then stops. Includes a hard gate that blocks coding until the design is approved.
 
 ## Layout
 
