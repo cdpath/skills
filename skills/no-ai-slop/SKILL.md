@@ -29,7 +29,7 @@ If the goal is unclear, ask what the reader should think, feel, or do after read
 - **Front-load only when it improves clarity.** Put conclusions early when that helps the reader. Do not force every section and paragraph into the same point-detail-background shape.
 - **Keep the user's meaning.** Don't invent claims, examples, stats, or opinions. If something is unclear, ask.
 - **Open it up, don't dumb it down.** Keep the substance, nuance, and precision. Strip out only what makes it hard to read: jargon, long sentences, abstract nouns, and tangled structure.
-- **Use active voice.** "The team shipped it Tuesday" beats "the decision emerged." Never let inanimate things do human verbs.
+- **Use active voice.** "The team shipped it Tuesday" beats "the decision emerged." Never let inanimate things do human verbs. The sharpest tell is an abstract concept personified into a speaker, then a colon: "贡献边界得说清楚：" / "The data speaks for itself:". Don't just rewrite the reveal — reclaim a real human subject: "我对此事亦有贡献，包括以下几个方面：" / "I'd make the call from the data:".
 - **Make every sentence earn its place.** Cut empty qualifiers and throat-clearing. Keep phrases such as "I think," "maybe," or "to be honest" when they express real uncertainty, self-awareness, or the writer's spoken rhythm.
 - **Untangle sentences without flattening the cadence.** Split sentences and paragraphs when they are genuinely hard to follow. Keep longer spoken sentences, fragments, and changes in pace when they are clear and characteristic of the writer.
 - **Be concrete and specific.** Abstraction is where writing goes to die. "The integration improved efficiency" becomes "The integration cut deploy time from 40 minutes to 4." Names, numbers, dates, mechanisms, and examples beat abstractions.
@@ -49,13 +49,15 @@ Often-empty phrases: it's worth noting, it's important to note, at the end of th
 
 ## Patterns to cut
 
-**Binary contrasts.** "This is not X. It's Y." / "The question isn't X, it's Y." / "It's not just X but Y." State Y directly. "The question isn't the model. It's the eval." becomes "The eval matters more than the model."
+**Binary contrasts.** "This is not X. It's Y." / "The question isn't X, it's Y." / "It's not just X but Y." In Chinese: "不是 X，而是 Y." State Y directly. "The question isn't the model. It's the eval." becomes "The eval matters more than the model." "不是 skill 越多越好，而是找到对的 skill" becomes "找到对的 skill 比堆数量更重要。"
+
+**Emphatic inversions.** A claim dressed up as a revelation through inverted emphasis: "真正…的，都是…" / "What really matters is…" / "The true X is…". Drop the frame and state it plainly. "真正做出东西的，都是算法同事" becomes "其实是算法同事把研究、工程和实验做出来的"; "What really matters is the eval" becomes "The eval matters most."
 
 **Throat-clearing openers.** "Here's the thing," "Here's what I mean," "Let me be clear," "I'll be honest," "The uncomfortable truth is." Cut them and state the point.
 
 **Faux-insight setups.** "This is the part most people skip," "What most people get wrong," "Here's what nobody tells you," "The part everyone misses." These flatter the writer as the lone expert. Cut the setup and make the claim stand on its own. "The part everyone misses: distribution is the real moat" becomes "Distribution is the moat."
 
-**Colon reveals.** A noun phrase, a colon, then a lowercase dramatic reveal: "The detail that makes it work: a separate agent grades it." "The best part: it learns." Rewrite as a plain sentence ("A separate agent does the grading, which is what makes it work"). Use colons for lists, labels, and quotes, not fake drama. Prefer sentence case after a colon unless grammar, a proper noun, a title, or code requires otherwise.
+**Colon reveals.** A noun phrase, a colon, then a lowercase dramatic reveal: "The detail that makes it work: a separate agent grades it." "The best part: it learns." Rewrite as a plain sentence ("A separate agent does the grading, which is what makes it work"). Use colons for lists, labels, and quotes, not fake drama. Prefer sentence case after a colon unless grammar, a proper noun, a title, or code requires otherwise. When the pre-colon subject is an abstract concept doing a human speech act ("贡献边界得说清楚："), don't just rewrite the reveal — see Use active voice and reclaim a human subject.
 
 **Superficial analysis.** Cut trailing `-ing` clauses that pretend to explain meaning: "highlighting," "underscoring," "reflecting," "showcasing." "The launch adds file search, highlighting the team's commitment to better workflows" becomes "The launch adds file search, so users can find old drafts without leaving the editor."
 
@@ -66,6 +68,8 @@ Often-empty phrases: it's worth noting, it's important to note, at the end of th
 **Fake-strong verbs.** Prefer "is" and "has" when they are clearer. "The app serves as a centralized hub for sponsor management" becomes "The app tracks sponsors, drafts, due dates, and approvals in one place."
 
 **Synonym cycling.** If the clear word is right, repeat it. Don't rotate terms for style. "The agent reviews the draft. The assistant scores the piece. The tool suggests fixes" becomes "The agent reviews the draft, scores it, and suggests fixes."
+
+**Translated-sounding collocations.** Trust the native ear: AI assembles modifier-plus-word pairs that are grammatical but read as translated. In Chinese the tell is a degree adverb (很 / 极 / 非常 / 挺) glued to a one- or two-character noun or adjective — "很实际", "很硬", "极冷", "很本质". Expand into the phrasing a native speaker actually reaches for: "这篇论文很实际" becomes "这篇论文研究的问题和实际很贴近". English has its own collocation tells (see Words to cut and "Be concrete and specific"); this pattern mainly catches Chinese.
 
 **Negative listing.** "Not a X. Not a Y. A Z." Just say Z.
 
@@ -96,15 +100,15 @@ Run these checks against your own edit before returning it. Answer each with pas
 5. Does the draft lead with what the reader needs while keeping personal setup that adds context, tension, or character?
 6. Are points front-loaded where that improves clarity without forcing every unit into the same structure?
 7. Do sentences earn their place, with concrete facts, protected details, and direct verbs where the draft supports them?
-8. Does the draft use active voice with human subjects where possible?
+8. Does the draft use active voice with human subjects where possible — no abstract concepts doing human speech acts ("贡献边界得说清楚：")?
 9. Does the edit keep useful edge and preserve structure unless the structure was hurting the piece?
 10. Are genuinely tangled sentences fixed while clear spoken cadence, fragments, and changes in pace remain intact?
 
 **Words and patterns**
 
 1. Are banned words, filler phrases, often-empty adverbs, and inflated claims removed unless quoted as examples?
-2. Are binary contrasts, negative listings, rhetorical setups, and throat-clearing openers removed?
-3. Are faux-insight setups, colon reveals, superficial analysis, fake-strong verbs, synonym cycling, dramatic fragments, and robotic rhythm fixed?
+2. Are binary contrasts ("不是…而是"), emphatic inversions ("真正…的都是…" / "what really matters"), negative listings, rhetorical setups, and throat-clearing openers removed?
+3. Are faux-insight setups, colon reveals, superficial analysis, fake-strong verbs, synonym cycling, translated-sounding collocations (很实际 / 很硬), dramatic fragments, and robotic rhythm fixed?
 4. Are importance puffery and weasel attribution replaced with plain facts and named sources, or flagged for the user when no source exists?
 5. Are fake-profound kicker lines deleted instead of rewritten into better metaphors?
 6. Are summary-recap endings cut so the piece ends on a concrete point, takeaway, or next action?
