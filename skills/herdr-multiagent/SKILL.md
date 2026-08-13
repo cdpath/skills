@@ -51,6 +51,8 @@ herdr agent prompt "$NAME" "$TASK" --timeout 5000 >/dev/null
 
 Done when every worker is started and prompted. Prompt without `--wait` so the fleet runs in parallel; record each worker's `$wid` and `$pane`.
 
+`agent` targets accept the `$NAME` registered by `agent start` or a pane id hosting an agent. For agents you did not start (no registered name; `agent list` shows none), the pane id is the only valid target - the agent label (`droid`, `pi`) is not.
+
 **5. Wait for the fleet to settle.**
 
 ```bash

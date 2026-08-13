@@ -43,6 +43,8 @@ agent get          type: agent_info        .result.agent.{...}
 agent read         CLI prints text; socket API .result.read.text
 ```
 
+Targets: every `agent` command accepts a unique agent **name** or a **pane id** currently hosting an agent. Names exist only for agents started via `agent start` (`agent list` shows no `name` field otherwise); the agent **label** (`droid`, `pi`) is not a valid target. For a pre-existing or manually launched agent, target it by pane id - `herdr agent prompt w1:pM ...`.
+
 States: `idle` (ready + tab seen), `working`, `blocked` (approval/question UI), `done` (idle after unseen background work), `unknown` (present, unclassified - not proof of completion).
 
 ## Parallel fan-out (worktree per agent)
@@ -201,6 +203,7 @@ Reserve `agent read` for status checks and short confirmations.
 
 - **`agent_prompt_stalled`** (`--wait` only): the worker did not leave its start state within 5 s - it exited or sits at a login/update/trust screen. `herdr pane read <pane> --source recent-unwrapped --lines 60`, fix it (re-login, restart, accept trust), then re-prompt.
 - **`agent_not_found`** for a name you started: the worker exited (crash, self-update, replaced). Re-check `herdr agent list`; if the pane is back at a shell prompt, `herdr agent start` the same name there again.
+- **`agent_not_found`** for a label like `droid` or `pi`: that agent was never started via `agent start`, so it has no name. Target it by pane id instead (`herdr agent prompt w1:pM ...`).
 - **Alternate-screen reads** (Claude Code, OpenCode, Oz): `agent read` / `pane read --source recent-unwrapped` returns little or nothing; Oz renders to the visible screen. Use `--source visible`, or have the worker write its output to a file and read the file.
 - **`timeout`**: check `agent get`; if `working`, extend `--timeout` and wait again; if `blocked`/`unknown`, read and intervene.
 - Wedged worker: `herdr agent send-keys <name> ctrl+c` to cancel the turn, then re-prompt or restart.
