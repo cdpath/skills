@@ -10,6 +10,8 @@
     "./skills/pypi-publish",
     "./skills/herdr-multiagent",
     "./skills/no-ai-slop",
-    "./skills/spark"
+    "./skills/spark",
+    "./skills/explain-diff-html",
+    "./skills/demo-optimization"
   ]
 }

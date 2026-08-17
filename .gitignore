@@ -2,5 +2,8 @@
 .agents/
 skills-lock.json
 
+# local-only skill (not published)
+skills/feishu-daily-report/
+
 # macOS
 .DS_Store
